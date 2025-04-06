@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BhookhMukt-Fight Hunger With Technology</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍽</text></svg>"
+      type="image/svg+xml"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+      }
+
+      .hero-image {
+        background-image: linear-gradient(
+            rgba(0, 0, 0, 0.6),
+            rgba(0, 0, 0, 0.6)
+          ),
+          url("https://images.pexels.com/photos/6646877/pexels-photo-6646877.jpeg");
+        background-size: cover;
+        background-position: center;
+        height: 80vh;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-image::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100px;
+        background: linear-gradient(
+          to top,
+          rgba(255, 255, 255, 1),
+          rgba(255, 255, 255, 0)
+        );
+      }
+
+      .btn-primary {
+        background-color: #e53e3e;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-primary:hover {
+        background-color: #c53030;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .btn-secondary {
+        background-color: white;
+        color: #e53e3e;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-secondary:hover {
+        background-color: #f7fafc;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .stat-card {
+        transition: all 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .icon-circle {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background-color: #fef2f2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .stat-card:hover .icon-circle {
+        background-color: #e53e3e;
+        color: white;
+      }
+
+      .counter {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #e53e3e;
+        margin-bottom: 0.5rem;
+      }
+
+      .section-title {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 2rem;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 3px;
+        background-color: #e53e3e;
+      }
+
+      .testimonial-card {
+        background-color: white;
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .testimonial-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .testimonial-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      .cta-section {
+        background-image: linear-gradient(
+            rgba(0, 0, 0, 0.7),
+            rgba(0, 0, 0, 0.7)
+          ),
+          url("https://images.pexels.com/photos/1640774/pexels-photo-1640774.jpeg");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+      }
+    </style>
+  </head>
+  <body class="font-sans">
+    <!-- Header will be injected here -->
+    <div id="header"></div>
+
+    <!-- Hero Section -->
+    <section
+      class="hero-image flex items-center justify-center text-center text-white"
+    >
+      <div
+        class="px-4 max-w-4xl mx-auto"
+        data-aos="fade-up"
+        data-aos-duration="1000"
+      >
+        <h1 class="text-4xl md:text-6xl font-bold mb-4 leading-tight">
+          Join the Fight Against Hunger
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 text-gray-200">
+          Together we can make India hunger-free
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a href="donate.html" class="btn-primary">
+            <i class="fas fa-hand-holding-heart mr-2"></i> Donate Now
+          </a>
+          <a href="request.html" class="btn-secondary">
+            <i class="fas fa-utensils mr-2"></i> Request Food
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="py-20 bg-gray-50">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-16" data-aos="fade-up">
+          <h2 class="text-3xl font-bold text-gray-800 mb-4 section-title">
+            Our Mission
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            To eliminate hunger in India by connecting food donors with those in
+            need through an efficient distribution network.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div
+            class="stat-card bg-white p-8 rounded-lg shadow-md text-center"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            <div class="icon-circle">
+              <i class="fas fa-utensils text-3xl text-red-600"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">5000+ Meals</h3>
+            <p class="text-gray-600">Distributed this month</p>
+          </div>
+          <div
+            class="stat-card bg-white p-8 rounded-lg shadow-md text-center"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            <div class="icon-circle">
+              <i class="fas fa-users text-3xl text-red-600"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">200+ Volunteers</h3>
+            <p class="text-gray-600">Working across India</p>
+          </div>
+          <div
+            class="stat-card bg-white p-8 rounded-lg shadow-md text-center"
+            data-aos="fade-up"
+            data-aos-delay="300"
+          >
+            <div class="icon-circle">
+              <i class="fas fa-city text-3xl text-red-600"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-2">15 Cities</h3>
+            <p class="text-gray-600">Where we operate</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-20 bg-white">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-16" data-aos="fade-up">
+          <h2 class="text-3xl font-bold text-gray-800 mb-4 section-title">
+            How It Works
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            Our platform makes it easy to connect food donors with those in need
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div class="text-center" data-aos="fade-up" data-aos-delay="100">
+            <div
+              class="bg-red-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+              <span class="text-2xl font-bold text-red-600">1</span>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Register</h3>
+            <p class="text-gray-600">
+              Create an account as a donor or recipient
+            </p>
+          </div>
+          <div class="text-center" data-aos="fade-up" data-aos-delay="200">
+            <div
+              class="bg-red-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+              <span class="text-2xl font-bold text-red-600">2</span>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Post</h3>
+            <p class="text-gray-600">
+              Share available food or request what you need
+            </p>
+          </div>
+          <div class="text-center" data-aos="fade-up" data-aos-delay="300">
+            <div
+              class="bg-red-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+              <span class="text-2xl font-bold text-red-600">3</span>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Connect</h3>
+            <p class="text-gray-600">
+              Match with donors or recipients in your area
+            </p>
+          </div>
+          <div class="text-center" data-aos="fade-up" data-aos-delay="400">
+            <div
+              class="bg-red-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+              <span class="text-2xl font-bold text-red-600">4</span>
+            </div>
+            <h3 class="text-xl font-bold mb-2">Deliver</h3>
+            <p class="text-gray-600">Coordinate pickup or delivery of food</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dynamic Stats Section -->
+    <section class="py-20 bg-gray-100">
+      <div class="container mx-auto px-6 text-center">
+        <h2
+          class="text-3xl font-bold text-gray-800 mb-8 section-title"
+          data-aos="fade-up"
+        >
+          Our Impact
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div
+            class="bg-white p-8 rounded-lg shadow-md"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            <h3 class="counter" id="totalDonations">0</h3>
+            <p class="text-gray-600">Total Donations</p>
+          </div>
+          <div
+            class="bg-white p-8 rounded-lg shadow-md"
+            data-aos="fade-up"
+            data-aos-delay="200"
+          >
+            <h3 class="counter" id="totalRequests">0</h3>
+            <p class="text-gray-600">Total Requests</p>
+          </div>
+          <div
+            class="bg-white p-8 rounded-lg shadow-md"
+            data-aos="fade-up"
+            data-aos-delay="300"
+          >
+            <h3 class="counter" id="totalMeals">0</h3>
+            <p class="text-gray-600">Meals Delivered</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-white">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-16" data-aos="fade-up">
+          <h2 class="text-3xl font-bold text-gray-800 mb-4 section-title">
+            Success Stories
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            Hear from people who have been helped through our platform
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="flex items-center mb-4">
+              <img
+                src="https://randomuser.me/api/portraits/women/32.jpg"
+                alt="Testimonial"
+                class="testimonial-avatar mr-4"
+              />
+              <div>
+                <h4 class="font-bold">Priya Sharma</h4>
+                <p class="text-gray-500">Food Recipient</p>
+              </div>
+            </div>
+            <p class="text-gray-600">
+              "Thanks to Bhookmukt, my family received fresh meals during a
+              difficult time. The platform made it easy to connect with generous
+              donors in our area."
+            </p>
+          </div>
+          <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="flex items-center mb-4">
+              <img
+                src="https://randomuser.me/api/portraits/men/45.jpg"
+                alt="Testimonial"
+                class="testimonial-avatar mr-4"
+              />
+              <div>
+                <h4 class="font-bold">Rajesh Patel</h4>
+                <p class="text-gray-500">Restaurant Owner</p>
+              </div>
+            </div>
+            <p class="text-gray-600">
+              "As a restaurant owner, I donate excess food through Bhookmukt.
+              It's satisfying to know that our food is reaching those who need
+              it most."
+            </p>
+          </div>
+          <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="flex items-center mb-4">
+              <img
+                src="https://randomuser.me/api/portraits/women/68.jpg"
+                alt="Testimonial"
+                class="testimonial-avatar mr-4"
+              />
+              <div>
+                <h4 class="font-bold">Anita Desai</h4>
+                <p class="text-gray-500">Volunteer</p>
+              </div>
+            </div>
+            <p class="text-gray-600">
+              "Volunteering with Bhookmukt has been incredibly rewarding. I've
+              seen firsthand how this platform is making a difference in our
+              community."
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section py-20 text-center text-white">
+      <div class="container mx-auto px-6" data-aos="fade-up">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">
+          Ready to Make a Difference?
+        </h2>
+        <p class="text-xl mb-8 max-w-2xl mx-auto">
+          Join thousands of people who are fighting hunger in India. Every
+          contribution counts.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a href="donate.html" class="btn-primary">
+            <i class="fas fa-hand-holding-heart mr-2"></i> Donate Food
+          </a>
+          <a href="volunteer.html" class="btn-secondary">
+            <i class="fas fa-user-friends mr-2"></i> Become a Volunteer
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer will be injected here -->
+    <div id="footer"></div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+    <!-- Firebase Configuration -->
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyA8rqugGN164U8xaG0h6eoryKETBLxampk",
+        authDomain: "bhookmukt.firebaseapp.com",
+        projectId: "bhookmukt",
+        storageBucket: "bhookmukt.appspot.com",
+        messagingSenderId: "772635537013",
+        appId: "1:772635537013:web:26143adc17c5e49dfe123c",
+        measurementId: "G-YNEQ07JSRG",
+      };
+
+      // Initialize Firebase
+      const app = firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+    </script>
+
+    <!-- Script to Load Dynamic Stats -->
+    <script>
+      async function loadStats() {
+        try {
+          const donationsSnapshot = await db.collection("donations").get();
+          const requestsSnapshot = await db.collection("requests").get();
+
+          // Update stats on the page
+          document.getElementById("totalDonations").innerText =
+            donationsSnapshot.size;
+          document.getElementById("totalRequests").innerText =
+            requestsSnapshot.size;
+
+          // Example: Calculate total meals delivered (assuming each donation serves 5 people)
+          const totalMeals = donationsSnapshot.size * 5;
+          document.getElementById("totalMeals").innerText = totalMeals;
+        } catch (error) {
+          console.error("Error loading stats:", error);
+        }
+      }
+
+      // Load stats when the page loads
+      window.addEventListener("DOMContentLoaded", loadStats);
+    </script>
+
+    <!-- Script to load header and footer -->
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        fetch("header.html")
+          .then((res) => res.text())
+          .then((data) => (document.getElementById("header").innerHTML = data));
+
+        fetch("footer.html")
+          .then((res) => res.text())
+          .then((data) => (document.getElementById("footer").innerHTML = data));
+
+        // Initialize AOS animation library
+        AOS.init({
+          duration: 800,
+          easing: "ease-in-out",
+          once: true,
+        });
+      });
+    </script>
+     
+  </body>
+</html>

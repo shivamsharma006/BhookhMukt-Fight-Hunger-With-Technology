@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bhookmukt - Hunger Free India</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍽</text></svg>"
+      type="image/svg+xml"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      /* Base colors */
+      :root {
+        --primary-color: #f44336;
+        --primary-hover: #e53935;
+        --secondary-color: #4caf50;
+        --text-dark: #2d3748;
+        --text-light: #718096;
+      }
+
+      /* Header styles */
+      header {
+        background: linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0.95),
+          rgba(255, 255, 255, 0.98)
+        );
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      header.scrolled {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        background: white;
+      }
+
+      /* Logo styles */
+      .logo-container {
+        transition: transform 0.3s ease;
+      }
+
+      .logo-container:hover {
+        transform: scale(1.05);
+      }
+
+      .logo-icon {
+        color: var(--primary-color);
+        text-shadow: 0 2px 4px rgba(244, 67, 54, 0.2);
+      }
+
+      .logo-text {
+        background: linear-gradient(
+          45deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+      }
+
+      /* Navigation styles */
+      .nav-link {
+        position: relative;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s ease;
+        color: var(--text-dark);
+        font-weight: 500;
+      }
+
+      .nav-link::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(
+          45deg,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+      }
+
+      .nav-link:hover {
+        color: var(--primary-color);
+      }
+
+      .nav-link:hover::before {
+        width: 80%;
+      }
+
+      .nav-link.active {
+        color: var(--primary-color);
+      }
+
+      .nav-link.active::before {
+        width: 80%;
+      }
+
+      /* Profile styles */
+      .profile-image-container {
+        position: relative;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .profile-image-container:hover {
+        transform: scale(1.1);
+        border-color: var(--primary-color);
+        box-shadow: 0 4px 8px rgba(244, 67, 54, 0.2);
+      }
+
+      .profile-image-container::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: linear-gradient(45deg, transparent, rgba(244, 67, 54, 0.1));
+        transition: all 0.3s ease;
+      }
+
+      .profile-image-container:hover::after {
+        background: linear-gradient(45deg, transparent, rgba(244, 67, 54, 0.2));
+      }
+
+      /* Dropdown styles */
+      .profile-dropdown {
+        animation: slideIn 0.2s ease-out;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.95);
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .user-details {
+        transition: all 0.2s ease;
+        position: relative;
+        padding: 12px 16px;
+      }
+
+      .user-details:hover {
+        background-color: rgba(248, 249, 250, 0.8);
+        transform: translateX(5px);
+      }
+
+      .user-details::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 3px;
+        background: linear-gradient(
+          to bottom,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+
+      .user-details:hover::after {
+        opacity: 1;
+      }
+
+      /* Mobile menu styles */
+      .mobile-menu {
+        animation: slideDown 0.3s ease-out;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.95);
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .mobile-menu-button {
+        transition: all 0.3s ease;
+      }
+
+      .mobile-menu-button:hover {
+        transform: scale(1.1);
+        color: var(--primary-color);
+      }
+
+      /* Sign out modal styles */
+      .sign-out-modal {
+        animation: fadeIn 0.2s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .sign-out-modal-content {
+        animation: scaleIn 0.2s ease-out;
+        background: linear-gradient(to bottom right, white, #f8f9fa);
+        border: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      @keyframes scaleIn {
+        from {
+          transform: scale(0.95);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+
+      /* Button styles */
+      .btn-primary {
+        background: linear-gradient(
+          45deg,
+          var(--primary-color),
+          var(--primary-hover)
+        );
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .nav-link {
+          padding: 0.75rem 1rem;
+        }
+
+        .profile-image-container {
+          width: 48px;
+          height: 48px;
+        }
+
+        .user-details {
+          padding: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="fixed w-full top-0 z-50">
+      <nav class="container mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+          <!-- Logo -->
+          <div class="flex items-center logo-container">
+            <a href="index.html" class="flex items-center">
+              <i class="fas fa-utensils logo-icon text-3xl mr-2"></i>
+              <span class="logo-text text-2xl">BhookhMukt</span>
+            </a>
+          </div>
+
+          <!-- Mobile menu button -->
+          <div class="md:hidden">
+            <button
+              id="mobile-menu-button"
+              class="mobile-menu-button text-gray-500 hover:text-gray-600 focus:outline-none"
+            >
+              <i class="fas fa-bars text-2xl"></i>
+            </button>
+          </div>
+
+          <!-- Desktop Navigation -->
+          <div class="hidden md:flex items-center space-x-8">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="donate.html" class="nav-link">Donate</a>
+            <a href="request.html" class="nav-link">Request</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+
+            <!-- Auth Buttons -->
+            <div id="authButtons" class="auth-buttons">
+              <a href="login.html" class="nav-link">Login / Sign Up</a>
+            </div>
+
+            <!-- User Menu -->
+            <div id="userMenu" class="user-menu hidden">
+              <div class="relative">
+                <button
+                  id="profileButton"
+                  class="flex items-center space-x-2 focus:outline-none group"
+                >
+                  <div
+                    class="profile-image-container w-10 h-10 rounded-full overflow-hidden"
+                  >
+                    <img
+                      class="profile-image w-full h-full object-cover"
+                      src="https://via.placeholder.com/40"
+                      alt="Profile"
+                    />
+                  </div>
+                  <span
+                    class="text-gray-600 group-hover:text-red-600 transition duration-200"
+                  >
+                    <i class="fas fa-chevron-down text-xs"></i>
+                  </span>
+                </button>
+                <div
+                  id="profileDropdown"
+                  class="profile-dropdown absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg py-2 hidden z-50"
+                >
+                  <div class="px-4 py-3 border-b user-details">
+                    <p class="profile-name font-medium text-gray-800"></p>
+                    <p class="profile-email text-sm text-gray-600"></p>
+                  </div>
+                  <div class="px-4 py-3 border-b user-details">
+                    <p class="text-sm text-gray-600">
+                      Type:
+                      <span
+                        class="profile-type font-medium text-red-600"
+                      ></span>
+                    </p>
+                    <p class="text-sm text-gray-600 mt-1">
+                      Address: <span class="profile-address"></span>
+                    </p>
+                  </div>
+                  <div class="px-4 py-2">
+                    <a
+                      href="profile.html"
+                      class="block text-gray-700 hover:bg-gray-100 py-2 px-4 transition duration-200 flex items-center"
+                    >
+                      <i class="fas fa-user mr-2"></i>
+                      <span>Profile</span>
+                    </a>
+                    <button
+                      onclick="signOut()"
+                      class="block w-full text-left text-gray-700 hover:bg-gray-100 py-2 px-4 transition duration-200 flex items-center"
+                    >
+                      <i class="fas fa-sign-out-alt mr-2"></i>
+                      <span>Logout</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <div id="mobileMenu" class="mobile-menu md:hidden hidden">
+          <div class="px-2 pt-2 pb-3 space-y-1">
+            <a href="index.html" class="nav-link block">Home</a>
+            <a href="donate.html" class="nav-link block">Donate</a>
+            <a href="request.html" class="nav-link block">Request</a>
+            <a href="about.html" class="nav-link block">About</a>
+            <a href="contact.html" class="nav-link block">Contact</a>
+            <div id="mobileAuthButtons" class="auth-buttons">
+              <a href="login.html" class="nav-link block">Login / Sign Up</a>
+            </div>
+            <div id="mobileUserMenu" class="user-menu hidden">
+              <div class="px-3 py-2">
+                <div class="flex items-center space-x-3">
+                  <div
+                    class="profile-image-container w-10 h-10 rounded-full overflow-hidden"
+                  >
+                    <img
+                      class="profile-image w-full h-full object-cover"
+                      src="https://via.placeholder.com/40"
+                      alt="Profile"
+                    />
+                  </div>
+                  <div>
+                    <p class="profile-name font-medium text-gray-800"></p>
+                    <p class="profile-email text-sm text-gray-600"></p>
+                  </div>
+                </div>
+                <div class="mt-2">
+                  <a
+                    href="profile.html"
+                    class="block text-gray-700 hover:bg-gray-100 py-2 px-4 transition duration-200 flex items-center"
+                  >
+                    <i class="fas fa-user mr-2"></i>
+                    <span>Profile</span>
+                  </a>
+                  <button
+                    onclick="signOut()"
+                    class="block w-full text-left text-gray-700 hover:bg-gray-100 py-2 px-4 transition duration-200 flex items-center"
+                  >
+                    <i class="fas fa-sign-out-alt mr-2"></i>
+                    <span>Logout</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Sign Out Modal -->
+    <div
+      id="signOutModal"
+      class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"
+    >
+      <div class="sign-out-modal-content rounded-lg p-6 max-w-sm w-full mx-4">
+        <h3 class="text-lg font-semibold mb-4">Confirm Sign Out</h3>
+        <p class="text-gray-600 mb-6">Are you sure you want to sign out?</p>
+        <div class="flex justify-end space-x-4">
+          <button
+            onclick="closeSignOutModal()"
+            class="px-4 py-2 text-gray-600 hover:text-gray-800"
+          >
+            Cancel
+          </button>
+          <button
+            onclick="confirmSignOut()"
+            class="btn-primary px-4 py-2 text-white rounded"
+          >
+            Sign Out
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/firebase-init.js"></script>
+    <script>
+      // Mobile menu toggle
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobileMenu');
+
+      mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+
+      // Initialize profile dropdown functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const profileButton = document.getElementById('profileButton');
+        const profileDropdown = document.getElementById('profileDropdown');
+
+        if (profileButton && profileDropdown) {
+          // Toggle dropdown on button click
+          profileButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            profileDropdown.classList.toggle('hidden');
+          });
+
+          // Close dropdown when clicking outside
+          document.addEventListener('click', function(e) {
+            if (!profileButton.contains(e.target) && !profileDropdown.contains(e.target)) {
+              profileDropdown.classList.add('hidden');
+            }
+          });
+
+          // Close dropdown on escape key
+          document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && !profileDropdown.classList.contains('hidden')) {
+              profileDropdown.classList.add('hidden');
+            }
+          });
+        }
+      });
+
+      // Close mobile menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
+          mobileMenu.classList.add('hidden');
+        }
+      });
+
+      // Sign out modal functions
+      function signOut() {
+        document.getElementById('signOutModal').classList.remove('hidden');
+      }
+
+      function closeSignOutModal() {
+        document.getElementById('signOutModal').classList.add('hidden');
+      }
+
+      function confirmSignOut() {
+        firebase.auth().signOut().then(() => {
+          closeSignOutModal();
+          window.location.href = 'index.html';
+        }).catch((error) => {
+          console.error('Error signing out:', error);
+        });
+      }
+
+      // Update UI based on auth state
+      firebase.auth().onAuthStateChanged((user) => {
+        const authButtons = document.getElementById('authButtons');
+        const userMenu = document.getElementById('userMenu');
+        const mobileAuthButtons = document.getElementById('mobileAuthButtons');
+        const mobileUserMenu = document.getElementById('mobileUserMenu');
+
+        if (user) {
+          // User is signed in
+          authButtons.classList.add('hidden');
+          userMenu.classList.remove('hidden');
+          mobileAuthButtons.classList.add('hidden');
+          mobileUserMenu.classList.remove('hidden');
+
+          // Update profile information
+          const profileImage = document.querySelectorAll('.profile-image');
+          const profileName = document.querySelectorAll('.profile-name');
+          const profileEmail = document.querySelectorAll('.profile-email');
+          const profileType = document.querySelectorAll('.profile-type');
+          const profileAddress = document.querySelectorAll('.profile-address');
+
+          // Set profile image with fallback
+          profileImage.forEach(img => {
+            if (user.photoURL) {
+              img.src = user.photoURL;
+              img.onerror = () => {
+                img.src = https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || user.email)};
+              };
+            } else {
+              img.src = https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || user.email)};
+            }
+          });
+
+          // Set name and email
+          profileName.forEach(el => el.textContent = user.displayName || user.email.split('@')[0]);
+          profileEmail.forEach(el => el.textContent = user.email);
+
+          // Get additional user data from Firestore
+          const db = firebase.firestore();
+          db.collection('users').doc(user.uid).get().then((doc) => {
+            if (doc.exists) {
+              const userData = doc.data();
+              profileType.forEach(el => el.textContent = userData.type || 'Donor');
+              profileAddress.forEach(el => el.textContent = userData.address || 'Not provided');
+            }
+          }).catch((error) => {
+            console.error('Error getting user data:', error);
+          });
+        } else {
+          // User is signed out
+          authButtons.classList.remove('hidden');
+          userMenu.classList.add('hidden');
+          mobileAuthButtons.classList.remove('hidden');
+          mobileUserMenu.classList.add('hidden');
+        }
+      });
+
+      // Handle scroll for header shadow
+      window.addEventListener('scroll', () => {
+        const header = document.querySelector('header');
+        if (window.scrollY > 0) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      });
+    </script>
+     
+  </body>
+</html>

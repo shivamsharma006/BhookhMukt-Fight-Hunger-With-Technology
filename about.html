@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Bhookmukt</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .team-member {
+            transition: transform 0.3s ease;
+        }
+        .team-member:hover {
+            transform: scale(1.05);
+        }
+        .stats-card {
+            transition: all 0.3s ease;
+        }
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-section text-white py-20">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">About Bhookmukt</h1>
+                <p class="text-xl mb-8">Connecting Generosity with Need, One Meal at a Time</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">Our Mission</h2>
+                <p class="text-lg text-gray-600 mb-8">
+                    Bhookmukt is dedicated to eliminating food waste and hunger by creating a bridge between those who have excess food and those who need it. Our platform makes it easy for individuals and organizations to donate food while helping those in need find nutritious meals.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Why Choose Bhookmukt?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="feature-card bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-4xl text-red-600 mb-4">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Easy Donations</h3>
+                    <p class="text-gray-600">Simple process to donate excess food with just a few clicks.</p>
+                </div>
+                <div class="feature-card bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-4xl text-red-600 mb-4">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Location-Based</h3>
+                    <p class="text-gray-600">Find food donations and requests near your location.</p>
+                </div>
+                <div class="feature-card bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-4xl text-red-600 mb-4">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Safe & Secure</h3>
+                    <p class="text-gray-600">Verified users and secure transactions for peace of mind.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="stats-card bg-red-600 text-white p-6 rounded-lg text-center">
+                    <div class="text-4xl font-bold mb-2">1000+</div>
+                    <div class="text-lg">Meals Donated</div>
+                </div>
+                <div class="stats-card bg-red-600 text-white p-6 rounded-lg text-center">
+                    <div class="text-4xl font-bold mb-2">500+</div>
+                    <div class="text-lg">Active Users</div>
+                </div>
+                <div class="stats-card bg-red-600 text-white p-6 rounded-lg text-center">
+                    <div class="text-4xl font-bold mb-2">50+</div>
+                    <div class="text-lg">Partner Organizations</div>
+                </div>
+                <div class="stats-card bg-red-600 text-white p-6 rounded-lg text-center">
+                    <div class="text-4xl font-bold mb-2">24/7</div>
+                    <div class="text-lg">Support Available</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Our Team</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="team-member bg-white p-6 rounded-lg shadow-md text-center">
+                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Team Member" class="w-32 h-32 rounded-full mx-auto mb-4">
+                    <h3 class="text-xl font-semibold mb-2">John Doe</h3>
+                    <p class="text-gray-600 mb-4">Founder & CEO</p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="#" class="text-gray-600 hover:text-red-600"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-gray-600 hover:text-red-600"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="team-member bg-white p-6 rounded-lg shadow-md text-center">
+                    <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Team Member" class="w-32 h-32 rounded-full mx-auto mb-4">
+                    <h3 class="text-xl font-semibold mb-2">Jane Smith</h3>
+                    <p class="text-gray-600 mb-4">Operations Manager</p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="#" class="text-gray-600 hover:text-red-600"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-gray-600 hover:text-red-600"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="team-member bg-white p-6 rounded-lg shadow-md text-center">
+                    <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Team Member" class="w-32 h-32 rounded-full mx-auto mb-4">
+                    <h3 class="text-xl font-semibold mb-2">Mike Johnson</h3>
+                    <p class="text-gray-600 mb-4">Community Manager</p>
+                    <div class="flex justify-center space-x-4">
+                        <a href="#" class="text-gray-600 hover:text-red-600"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-gray-600 hover:text-red-600"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-red-600 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-6">Join Us in Making a Difference</h2>
+            <p class="text-xl mb-8">Be part of our mission to eliminate hunger and food waste.</p>
+            <a href="register.html" class="bg-white text-red-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                Get Started
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script src="js/firebase-init.js"></script>
+    <script>
+        // Load header and footer
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            });
+
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('footer-placeholder').innerHTML = data;
+            });
+    </script>
+</body>
+</html> 

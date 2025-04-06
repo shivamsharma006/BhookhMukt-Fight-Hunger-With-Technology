@@ -1,0 +1,151 @@
+<footer class="bg-gray-800 text-white py-12">
+  <div class="container mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div>
+        <h3 class="text-xl font-bold mb-4">Bhookmukt</h3>
+        <p class="text-gray-400">
+          Connecting food donors with those in need across India.
+        </p>
+        <div class="flex space-x-4 mt-4">
+          <a
+            href="#"
+            class="text-gray-400 hover:text-white transition duration-300"
+          >
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a
+            href="#"
+            class="text-gray-400 hover:text-white transition duration-300"
+          >
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a
+            href="#"
+            class="text-gray-400 hover:text-white transition duration-300"
+          >
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a
+            href="#"
+            class="text-gray-400 hover:text-white transition duration-300"
+          >
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="index.html"
+              class="text-gray-400 hover:text-white transition duration-300"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="donate.html"
+              class="text-gray-400 hover:text-white transition duration-300"
+              >Donate Food</a
+            >
+          </li>
+          <li>
+            <a
+              href="request.html"
+              class="text-gray-400 hover:text-white transition duration-300"
+              >Request Food</a
+            >
+          </li>
+          <li>
+            <a
+              href="about.html"
+              class="text-gray-400 hover:text-white transition duration-300"
+              >About Us</a
+            >
+          </li>
+          <li>
+            <a
+              href="contact.html"
+              class="text-gray-400 hover:text-white transition duration-300"
+              >Contact</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-xl font-bold mb-4">Resources</h3>
+        <ul class="space-y-2">
+          <li>
+            <a
+              href="#"
+              class="text-gray-400 hover:text-white transition duration-300"
+              >How It Works</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              class="text-gray-400 hover:text-white transition duration-300"
+              >FAQs</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              class="text-gray-400 hover:text-white transition duration-300"
+              >Blog</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              class="text-gray-400 hover:text-white transition duration-300"
+              >Success Stories</a
+            >
+          </li>
+          <li>
+            <a
+              href="#"
+              class="text-gray-400 hover:text-white transition duration-300"
+              >Volunteer</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+        <ul class="space-y-2">
+          <li class="flex items-start">
+            <i class="fas fa-map-marker-alt mt-1 mr-2 text-red-500"></i>
+            <span class="text-gray-400"
+              >123 Main Street, Mumbai, Maharashtra, India</span
+            >
+          </li>
+          <li class="flex items-start">
+            <i class="fas fa-phone mt-1 mr-2 text-red-500"></i>
+            <span class="text-gray-400">+91 98765 43210</span>
+          </li>
+          <li class="flex items-start">
+            <i class="fas fa-envelope mt-1 mr-2 text-red-500"></i>
+            <span class="text-gray-400">info@bhookmukt.org</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+      <p>&copy; 2025 Bhookmukt - Hunger Free India. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Newsletter form submission
+  document.querySelector("form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = e.target.querySelector('input[type="email"]').value;
+    // Add your newsletter subscription logic here
+    alert("Thank you for subscribing to our newsletter!");
+    e.target.reset();
+  });
+</script>

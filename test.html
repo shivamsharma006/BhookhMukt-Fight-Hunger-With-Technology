@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page - Bhookmukt</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍽️</text></svg>" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .primary-bg { background-color: #F44336; }
+        .primary-text { color: #F44336; }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-lg shadow-md p-6 max-w-2xl mx-auto">
+            <h1 class="text-3xl font-bold text-center mb-6 primary-text">Bhookmukt Test Page</h1>
+            
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Server Status</h2>
+                <div class="bg-green-100 text-green-800 p-3 rounded">
+                    <p>✅ Server is running correctly</p>
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Firebase Connection</h2>
+                <div id="firebaseStatus" class="bg-gray-100 p-3 rounded">
+                    <p>Checking Firebase connection...</p>
+                </div>
+            </div>
+            
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold mb-2">Static Files</h2>
+                <div class="bg-blue-100 text-blue-800 p-3 rounded">
+                    <p>✅ Static files are being served correctly</p>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <a href="index.html" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                    Go to Homepage
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <!-- Firebase Configuration -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyA8rqugGN164U8xaG0h6eoryKETBLxampk",
+            authDomain: "bhookmukt.firebaseapp.com",
+            projectId: "bhookmukt",
+            storageBucket: "bhookmukt.appspot.com",
+            messagingSenderId: "772635537013",
+            appId: "1:772635537013:web:26143adc17c5e49dfe123c",
+            measurementId: "G-YNEQ07JSRG"
+        };
+
+        // Initialize Firebase
+        try {
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.firestore();
+            
+            // Test Firestore connection
+            db.collection('test').doc('test').get()
+                .then(() => {
+                    document.getElementById('firebaseStatus').innerHTML = `
+                        <div class="bg-green-100 text-green-800 p-3 rounded">
+                            <p>✅ Firebase connection successful</p>
+                        </div>
+                    `;
+                })
+                .catch(error => {
+                    document.getElementById('firebaseStatus').innerHTML = `
+                        <div class="bg-red-100 text-red-800 p-3 rounded">
+                            <p>❌ Firebase connection failed: ${error.message}</p>
+                        </div>
+                    `;
+                });
+        } catch (error) {
+            document.getElementById('firebaseStatus').innerHTML = `
+                <div class="bg-red-100 text-red-800 p-3 rounded">
+                    <p>❌ Firebase initialization error: ${error.message}</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html> 

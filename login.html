@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Sign Up - Bhookmukt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .primary-bg { background-color: #F44336; }
+        .primary-text { color: #F44336; }
+        .tab-active {
+            color: #F44336;
+            border-bottom: 2px solid #F44336;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Include Header -->
+    <div id="header-placeholder"></div>
+    <script>
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+            });
+    </script>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-red-600"></div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8 mt-16">
+        <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg p-8">
+            <!-- Tabs -->
+            <div class="flex mb-6 border-b">
+                <button id="loginTab" class="flex-1 py-2 text-center tab-active" onclick="switchTab('login')">Login</button>
+                <button id="signupTab" class="flex-1 py-2 text-center" onclick="switchTab('signup')">Sign Up</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label for="loginEmail" class="block text-gray-700 mb-2">Email</label>
+                    <input type="email" id="loginEmail" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-red-500" required>
+                </div>
+                <div>
+                    <label for="loginPassword" class="block text-gray-700 mb-2">Password</label>
+                    <input type="password" id="loginPassword" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-red-500" required>
+                </div>
+                <button type="submit" class="w-full py-2 px-4 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-300">
+                    Login
+                </button>
+            </form>
+
+            <!-- Sign Up Form -->
+            <form id="signupForm" class="space-y-4 hidden">
+                <div>
+                    <label for="signupName" class="block text-gray-700 mb-2">Full Name</label>
+                    <input type="text" id="signupName" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-red-500" required>
+                </div>
+                <div>
+                    <label for="signupEmail" class="block text-gray-700 mb-2">Email</label>
+                    <input type="email" id="signupEmail" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-red-500" required>
+                </div>
+                <div>
+                    <label for="signupPassword" class="block text-gray-700 mb-2">Password</label>
+                    <input type="password" id="signupPassword" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-red-500" required>
+                </div>
+                <div>
+                    <label for="signupConfirmPassword" class="block text-gray-700 mb-2">Confirm Password</label>
+                    <input type="password" id="signupConfirmPassword" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-red-500" required>
+                </div>
+                <button type="submit" class="w-full py-2 px-4 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-300">
+                    Sign Up
+                </button>
+            </form>
+
+            <!-- Google Sign In -->
+            <div class="mt-6">
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 bg-white text-gray-500">Or continue with</span>
+                    </div>
+                </div>
+                <div class="mt-4 space-y-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">I want to:</label>
+                        <div class="flex space-x-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="role" value="donor" class="mr-2" required>
+                                <span>Donate Food</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="role" value="requester" class="mr-2" required>
+                                <span>Request Food</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="address" class="block text-gray-700 mb-2">Address</label>
+                        <textarea id="address" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-red-500" rows="3" required></textarea>
+                    </div>
+                    <button id="googleSignIn" class="w-full flex items-center justify-center py-2 px-4 border border-gray-300 rounded-lg hover:bg-gray-50 transition duration-300">
+                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" class="w-5 h-5 mr-2">
+                        <span>Sign in with Google</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div id="errorMessage" class="mt-4 text-red-600 text-center hidden"></div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Firebase Initialization -->
+    <script src="js/firebase-init.js"></script>
+
+    <script>
+        // Get DOM elements
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const loginTab = document.getElementById('loginTab');
+        const signupTab = document.getElementById('signupTab');
+        const googleSignIn = document.getElementById('googleSignIn');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Switch between login and signup forms
+        function switchTab(tab) {
+            if (tab === 'login') {
+                loginForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+                loginTab.classList.add('tab-active');
+                signupTab.classList.remove('tab-active');
+            } else {
+                loginForm.classList.add('hidden');
+                signupForm.classList.remove('hidden');
+                loginTab.classList.remove('tab-active');
+                signupTab.classList.add('tab-active');
+            }
+            errorMessage.classList.add('hidden');
+        }
+
+        // Show/hide loading overlay
+        function toggleLoading(show) {
+            loadingOverlay.classList.toggle('hidden', !show);
+        }
+
+        // Show error message
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.remove('hidden');
+        }
+
+        // Handle login form submission
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            toggleLoading(true);
+            errorMessage.classList.add('hidden');
+
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            try {
+                await fbAuth.signInWithEmailAndPassword(email, password);
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.error('Login error:', error);
+                showError(error.message);
+                toggleLoading(false);
+            }
+        });
+
+        // Handle signup form submission
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            toggleLoading(true);
+            errorMessage.classList.add('hidden');
+
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('signupConfirmPassword').value;
+
+            if (password !== confirmPassword) {
+                showError('Passwords do not match');
+                toggleLoading(false);
+                return;
+            }
+
+            try {
+                const userCredential = await fbAuth.createUserWithEmailAndPassword(email, password);
+                await userCredential.user.updateProfile({
+                    displayName: name
+                });
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.error('Signup error:', error);
+                showError(error.message);
+                toggleLoading(false);
+            }
+        });
+
+        // Initialize Firebase Auth
+        const fbAuth = firebase.auth();
+        const fbStore = firebase.firestore();
+
+        // Enhanced Google Sign In
+        function signInWithGoogle() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            fbAuth.signInWithPopup(provider)
+                .then((result) => {
+                    console.log('Google sign-in successful');
+                    const user = result.user;
+                    
+                    // Check if user exists in Firestore
+                    fbStore.collection('users').doc(user.uid).get()
+                        .then((doc) => {
+                            if (!doc.exists) {
+                                // Create new user document
+                                fbStore.collection('users').doc(user.uid).set({
+                                    email: user.email,
+                                    name: user.displayName,
+                                    role: 'user',
+                                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                                })
+                                .then(() => {
+                                    console.log('New user document created');
+                                    window.location.href = 'index.html';
+                                })
+                                .catch((error) => {
+                                    console.error('Error creating user document:', error);
+                                    alert('Error creating user profile. Please try again.');
+                                });
+                            } else {
+                                // User exists, redirect to home
+                                window.location.href = 'index.html';
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Error checking user document:', error);
+                            alert('Error checking user profile. Please try again.');
+                        });
+                })
+                .catch((error) => {
+                    console.error('Google sign-in error:', error);
+                    alert('Error signing in with Google: ' + error.message);
+                });
+        }
+
+        // Check if user is already signed in
+        fbAuth.onAuthStateChanged((user) => {
+            if (user) {
+                console.log('User already signed in, redirecting to home');
+                window.location.href = 'index.html';
+            }
+        });
+
+        // Initialize form after DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            if (googleSignIn) {
+                googleSignIn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    signInWithGoogle();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

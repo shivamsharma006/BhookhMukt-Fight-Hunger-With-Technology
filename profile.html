@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Bhookmukt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .primary-bg { background-color: #F44336; }
+        .primary-text { color: #F44336; }
+        
+        /* Loading spinner */
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #F44336;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header will be injected here -->
+    <div id="header"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-white bg-opacity-80 flex items-center justify-center z-50">
+        <div class="text-center">
+            <div class="spinner mx-auto mb-4"></div>
+            <p class="text-gray-700 font-medium">Loading your profile...</p>
+        </div>
+    </div>
+
+    <!-- Profile Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="bg-white p-8 rounded-lg shadow-md">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-3xl font-bold primary-text">My Profile</h2>
+                    <button id="editProfileBtn" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg transition duration-300">
+                        <i class="fas fa-edit mr-2"></i> Edit Profile
+                    </button>
+                </div>
+
+                <!-- Profile Information -->
+                <div id="profileInfo" class="space-y-6">
+                    <div class="flex items-center space-x-4">
+                        <div class="w-24 h-24 bg-gray-200 rounded-full flex items-center justify-center">
+                            <img id="profileImage" src="" alt="Profile" class="w-full h-full rounded-full object-cover hidden">
+                            <i id="profileIcon" class="fas fa-user text-4xl text-gray-400"></i>
+                        </div>
+                        <div>
+                            <h3 id="userName" class="text-2xl font-bold text-gray-800"></h3>
+                            <p id="userRole" class="text-gray-600"></p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-700 mb-2">Email</h4>
+                            <p id="userEmail" class="text-gray-600"></p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-700 mb-2">Account Type</h4>
+                            <p id="accountType" class="text-gray-600"></p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-700 mb-2">Member Since</h4>
+                            <p id="memberSince" class="text-gray-600"></p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold text-gray-700 mb-2">Last Login</h4>
+                            <p id="lastLogin" class="text-gray-600"></p>
+                        </div>
+                    </div>
+
+                    <!-- Activity Stats -->
+                    <div class="mt-8">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">Activity Summary</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                <h4 class="font-semibold text-gray-700">Donations</h4>
+                                <p id="donationCount" class="text-2xl font-bold primary-text">0</p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                <h4 class="font-semibold text-gray-700">Requests</h4>
+                                <p id="requestCount" class="text-2xl font-bold primary-text">0</p>
+                            </div>
+                            <div class="bg-gray-50 p-4 rounded-lg text-center">
+                                <h4 class="font-semibold text-gray-700">Meals Delivered</h4>
+                                <p id="mealsDelivered" class="text-2xl font-bold primary-text">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Edit Profile Form (Hidden by default) -->
+                <form id="editProfileForm" class="hidden space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="editName" class="block text-gray-700 mb-2">Full Name</label>
+                            <input type="text" id="editName" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                        </div>
+                        <div>
+                            <label for="editPhone" class="block text-gray-700 mb-2">Phone Number</label>
+                            <input type="tel" id="editPhone" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                        </div>
+                        <div>
+                            <label for="editAddress" class="block text-gray-700 mb-2">Address</label>
+                            <input type="text" id="editAddress" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                        </div>
+                        <div>
+                            <label for="editCity" class="block text-gray-700 mb-2">City</label>
+                            <input type="text" id="editCity" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                        </div>
+                    </div>
+                    <div class="flex justify-end space-x-4">
+                        <button type="button" id="cancelEditBtn" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-2 rounded-lg transition duration-300">
+                            Cancel
+                        </button>
+                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg transition duration-300">
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer will be injected here -->
+    <div id="footer"></div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
+
+    <!-- Firebase Configuration -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyA8rqugGN164U8xaG0h6eoryKETBLxampk",
+            authDomain: "bhookmukt.firebaseapp.com",
+            projectId: "bhookmukt",
+            storageBucket: "bhookmukt.appspot.com",
+            messagingSenderId: "772635537013",
+            appId: "1:772635537013:web:26143adc17c5e49dfe123c",
+            measurementId: "G-YNEQ07JSRG"
+        };
+
+        // Initialize Firebase
+        try {
+            firebase.initializeApp(firebaseConfig);
+            console.log('Firebase initialized in profile page');
+        } catch (error) {
+            console.error('Firebase initialization error in profile page:', error);
+        }
+
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+
+        // Load header and footer
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('header.html')
+                .then(res => res.text())
+                .then(data => {
+                    document.getElementById('header').innerHTML = data;
+                })
+                .catch(err => {
+                    console.error('Error loading header:', err);
+                });
+
+            fetch('footer.html')
+                .then(res => res.text())
+                .then(data => {
+                    document.getElementById('footer').innerHTML = data;
+                })
+                .catch(err => {
+                    console.error('Error loading footer:', err);
+                });
+        });
+
+        // Check authentication state
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                console.log('User is signed in:', user);
+                try {
+                    await loadUserProfile(user);
+                    // Hide loading overlay after profile is loaded
+                    document.getElementById('loadingOverlay').style.display = 'none';
+                } catch (error) {
+                    console.error('Error loading profile:', error);
+                    alert('Error loading profile information. Please try again later.');
+                    document.getElementById('loadingOverlay').style.display = 'none';
+                }
+            } else {
+                console.log('No user is signed in');
+                document.getElementById('loadingOverlay').style.display = 'none';
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Load user profile
+        async function loadUserProfile(user) {
+            try {
+                const userDoc = await db.collection('users').doc(user.uid).get();
+                if (userDoc.exists) {
+                    const userData = userDoc.data();
+                    
+                    // Update profile information
+                    document.getElementById('userName').textContent = userData.name || user.displayName || 'User';
+                    document.getElementById('userEmail').textContent = user.email;
+                    document.getElementById('userRole').textContent = userData.role || 'User';
+                    document.getElementById('accountType').textContent = userData.role === 'donor' ? 'Food Donor' : 'Food Receiver';
+                    
+                    // Format dates
+                    const memberSince = userData.createdAt ? new Date(userData.createdAt.toDate()).toLocaleDateString() : 'N/A';
+                    const lastLogin = userData.lastLogin ? new Date(userData.lastLogin.toDate()).toLocaleDateString() : 'N/A';
+                    document.getElementById('memberSince').textContent = memberSince;
+                    document.getElementById('lastLogin').textContent = lastLogin;
+
+                    // Load profile image if exists
+                    if (user.photoURL) {
+                        // Use Google profile photo if available
+                        const img = document.getElementById('profileImage');
+                        img.src = user.photoURL;
+                        img.classList.remove('hidden');
+                        document.getElementById('profileIcon').classList.add('hidden');
+                    } else if (userData.profileImage) {
+                        // Fall back to stored profile image
+                        const img = document.getElementById('profileImage');
+                        img.src = userData.profileImage;
+                        img.classList.remove('hidden');
+                        document.getElementById('profileIcon').classList.add('hidden');
+                    }
+
+                    // Load activity stats
+                    const donationsSnapshot = await db.collection('donations')
+                        .where('userId', '==', user.uid)
+                        .get();
+                    const requestsSnapshot = await db.collection('requests')
+                        .where('userId', '==', user.uid)
+                        .get();
+
+                    document.getElementById('donationCount').textContent = donationsSnapshot.size;
+                    document.getElementById('requestCount').textContent = requestsSnapshot.size;
+                    document.getElementById('mealsDelivered').textContent = donationsSnapshot.size * 5; // Assuming each donation serves 5 people
+
+                    // Populate edit form
+                    document.getElementById('editName').value = userData.name || user.displayName || '';
+                    document.getElementById('editPhone').value = userData.phone || '';
+                    document.getElementById('editAddress').value = userData.address || '';
+                    document.getElementById('editCity').value = userData.city || '';
+                } else {
+                    console.log('User document does not exist, creating one...');
+                    // Create user document if it doesn't exist
+                    await db.collection('users').doc(user.uid).set({
+                        name: user.displayName || 'User',
+                        email: user.email,
+                        profileImage: user.photoURL || '',
+                        role: 'user',
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                    
+                    // Reload profile after creating document
+                    await loadUserProfile(user);
+                }
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                throw error; // Re-throw to be caught by the caller
+            }
+        }
+
+        // Edit profile functionality
+        document.getElementById('editProfileBtn').addEventListener('click', () => {
+            document.getElementById('profileInfo').classList.add('hidden');
+            document.getElementById('editProfileForm').classList.remove('hidden');
+        });
+
+        document.getElementById('cancelEditBtn').addEventListener('click', () => {
+            document.getElementById('profileInfo').classList.remove('hidden');
+            document.getElementById('editProfileForm').classList.add('hidden');
+        });
+
+        document.getElementById('editProfileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user = auth.currentUser;
+            if (!user) return;
+
+            // Show loading overlay during update
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            
+            try {
+                const updates = {
+                    name: document.getElementById('editName').value,
+                    phone: document.getElementById('editPhone').value,
+                    address: document.getElementById('editAddress').value,
+                    city: document.getElementById('editCity').value,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                await db.collection('users').doc(user.uid).update(updates);
+                
+                // Update profile display
+                document.getElementById('userName').textContent = updates.name;
+                
+                // Show success message
+                alert('Profile updated successfully');
+                
+                // Switch back to profile view
+                document.getElementById('profileInfo').classList.remove('hidden');
+                document.getElementById('editProfileForm').classList.add('hidden');
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                alert('Error updating profile');
+            } finally {
+                // Hide loading overlay after update
+                document.getElementById('loadingOverlay').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html> 

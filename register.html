@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Bhookmukt</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .primary-bg { background-color: #F44336; }
+        .primary-text { color: #F44336; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <?php include 'header.html'; ?>
+
+    <!-- Registration Form -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-6 max-w-md">
+            <div class="bg-white p-8 rounded-lg shadow-md">
+                <h2 class="text-3xl font-bold text-center mb-8 primary-text">Register</h2>
+                <form id="registerForm">
+                    <div class="mb-4">
+                        <label for="name" class="block text-gray-700 mb-2">Full Name</label>
+                        <input type="text" id="name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="block text-gray-700 mb-2">Email</label>
+                        <input type="email" id="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="password" class="block text-gray-700 mb-2">Password</label>
+                        <input type="password" id="password" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="confirmPassword" class="block text-gray-700 mb-2">Confirm Password</label>
+                        <input type="password" id="confirmPassword" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-gray-700 mb-2">I want to:</label>
+                        <div class="flex space-x-4">
+                            <label class="flex items-center">
+                                <input type="radio" name="role" value="donor" class="mr-2" required>
+                                <span>Donate Food</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="role" value="requester" class="mr-2" required>
+                                <span>Request Food</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="address" class="block text-gray-700 mb-2">Address</label>
+                        <textarea id="address" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-red-500" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300">
+                        Register
+                    </button>
+                    <div class="my-4 text-center">
+                        <span class="text-gray-500">OR</span>
+                    </div>
+                    <button type="button" id="googleSignIn" class="w-full bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-bold py-3 px-4 rounded-lg transition duration-300 flex items-center justify-center">
+                        <img src="https://www.google.com/favicon.ico" alt="Google" class="w-5 h-5 mr-2">
+                        Sign up with Google
+                    </button>
+                    <p class="text-center mt-4 text-gray-600">
+                        Already have an account? <a href="login.html" class="primary-text hover:underline">Login here</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <?php include 'footer.html'; ?>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <!-- Firebase Configuration -->
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyA8rqugGN164U8xaG0h6eoryKETBLxampk",
+            authDomain: "bhookmukt.firebaseapp.com",
+            projectId: "bhookmukt",
+            storageBucket: "bhookmukt.appspot.com",
+            messagingSenderId: "772635537013",
+            appId: "1:772635537013:web:26143adc17c5e49dfe123c",
+            measurementId: "G-YNEQ07JSRG"
+        };
+
+        // Initialize Firebase with error handling
+        try {
+            firebase.initializeApp(firebaseConfig);
+            console.log('Firebase initialized successfully');
+        } catch (error) {
+            console.error('Firebase initialization error:', error);
+            alert('Error initializing Firebase. Please check console for details.');
+        }
+
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Configure Google Auth Provider with error handling
+        const googleProvider = new firebase.auth.GoogleAuthProvider();
+        googleProvider.setCustomParameters({
+            prompt: 'select_account',
+            client_id: firebaseConfig.clientId // Add client ID if available
+        });
+
+        // Handle Google Sign In with detailed error logging
+        document.getElementById('googleSignIn').addEventListener('click', async () => {
+            try {
+                console.log('Starting Google sign-in process...');
+                const role = document.querySelector('input[name="role"]:checked').value;
+                console.log('Selected role:', role);
+
+                const result = await auth.signInWithPopup(googleProvider);
+                const user = result.user;
+                console.log('Google sign-in successful:', user);
+                
+                // Check if user exists in Firestore
+                console.log('Checking user in Firestore...');
+                const userDoc = await db.collection('users').doc(user.uid).get();
+                
+                if (!userDoc.exists) {
+                    console.log('Creating new user document...');
+                    // Create new user document
+                    await db.collection('users').doc(user.uid).set({
+                        name: user.displayName,
+                        email: user.email,
+                        role: role,
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+                    });
+                } else {
+                    console.log('Updating user last login...');
+                    await db.collection('users').doc(user.uid).update({
+                        lastLogin: firebase.firestore.FieldValue.serverTimestamp(),
+                        role: role // Update role if user changes it during registration
+                    });
+                }
+                
+                console.log('Redirecting to home page...');
+                window.location.href = '/';
+            } catch (error) {
+                console.error('Google sign-in error:', error);
+                console.error('Error code:', error.code);
+                console.error('Error message:', error.message);
+                
+                if (error.code === 'auth/popup-blocked') {
+                    alert('Please enable popups for this website to use Google sign-in');
+                } else if (error.code === 'auth/popup-closed-by-user') {
+                    alert('Sign-in was cancelled');
+                } else if (error.code === 'auth/internal-error') {
+                    alert('Internal error occurred. Please try again or use a different sign-in method.');
+                    console.error('Internal error details:', error);
+                } else {
+                    alert(`Sign-in error: ${error.message}`);
+                }
+            }
+        });
+
+        // Monitor Auth State Changes
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                console.log('Auth state changed - User is signed in:', user);
+            } else {
+                console.log('Auth state changed - No user is signed in');
+            }
+        });
+
+        // Handle signup form submission
+        const registerForm = document.getElementById('registerForm');
+        const errorMessage = document.getElementById('error-message');
+        const loadingIndicator = document.getElementById('loading-indicator');
+
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            toggleLoading(true);
+            errorMessage.classList.add('hidden');
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const role = document.querySelector('input[name="role"]:checked').value;
+            const address = document.getElementById('address').value;
+
+            if (password !== confirmPassword) {
+                showError('Passwords do not match');
+                toggleLoading(false);
+                return;
+            }
+
+            try {
+                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                await userCredential.user.updateProfile({
+                    displayName: name
+                });
+
+                // Save additional user data to Firestore
+                await db.collection('users').doc(userCredential.user.uid).set({
+                    name: name,
+                    email: email,
+                    role: role,
+                    address: address,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    lastLogin: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.error('Signup error:', error);
+                showError(error.message);
+                toggleLoading(false);
+            }
+        });
+
+        function toggleLoading(isLoading) {
+            if (isLoading) {
+                loadingIndicator.classList.remove('hidden');
+                registerForm.classList.add('opacity-50');
+                registerForm.classList.add('pointer-events-none');
+            } else {
+                loadingIndicator.classList.add('hidden');
+                registerForm.classList.remove('opacity-50');
+                registerForm.classList.remove('pointer-events-none');
+            }
+        }
+
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.remove('hidden');
+            setTimeout(() => {
+                errorMessage.classList.add('hidden');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
